@@ -1,1 +1,2 @@
-Pakete
+pandas
+folium
