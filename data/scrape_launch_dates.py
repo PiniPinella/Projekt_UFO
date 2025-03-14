@@ -7,15 +7,15 @@ print("scrape_launch_dates gestartet.")
 
 ROOT_DIR = sys.argv[1]
 
-path_to_data_raw = os.path.join(ROOT_DIR, "data", "data_raw", "htm")      # Ordner mit HTML-Dateien
+path_to_htm = os.path.join(ROOT_DIR, "data", "data_raw", "htm")      # Ordner mit HTML-Dateien
 
 all_dates = []
 
 print("Scraping beginnt.")
 
-for filename in os.listdir(path_to_data_raw):
+for filename in os.listdir(path_to_htm):
     if filename.endswith(".htm"):
-        with open(os.path.join(path_to_data_raw, filename), "r", encoding="utf-8") as file:
+        with open(os.path.join(path_to_htm, filename), "r", encoding="utf-8") as file:
             soup = BeautifulSoup(file, "lxml")
             date_cells = soup.find_all("td", class_="column-1")
             dates = [cell.get_text(strip=True) for cell in date_cells]

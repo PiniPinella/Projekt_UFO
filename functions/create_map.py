@@ -25,7 +25,6 @@ def create_cluster_heat_map(df:pd.DataFrame,
         df = filter_by_dates.filter_by_interval(df, start_date, end_date)
 
     # Radius:
-
     if radius:
         distances = haversine.distance(28.3922, -80.6077, df["latitude"], df["longitude"])  # Fixpunkt ist Cape Caneveral
         df = df[distances <= radius]
@@ -33,7 +32,7 @@ def create_cluster_heat_map(df:pd.DataFrame,
     center_lat = df["latitude"].mean()
     center_lon = df["longitude"].mean()
 
-    map = folium.Map(location=[center_lat, center_lon], zoom_start = 5)
+    map = folium.Map(location=[center_lat, center_lon], zoom_start = 5)             # Erzeuge Map mit Folium
 
     folium.Marker(location = [28.3922, -80.6077],                                   # Cape Canaveral Koordinaten
                   popup    = "🚀 Cape Canaveral Spaceport",
@@ -47,18 +46,18 @@ def create_cluster_heat_map(df:pd.DataFrame,
 
     if map_type == "cluster" or map_type == "opnv":                                 # cluster map or cluster opnv map
                                  
-        marker_cluster = MarkerCluster().add_to(map)
+        marker_cluster = MarkerCluster().add_to(map)                                # Erstelle Cluster damit nicht 80000 Punkte einzelt auf der Map sind
 
         for lat, lon in zip(df["latitude"], df["longitude"]):
             folium.Marker([lat, lon]).add_to(marker_cluster)    
 
-        if map_type == "opnv":
+        if map_type == "opnv":                                                      # Lädt andere Tiles mit Flughäfen und anderen ÖPNVs
              folium.TileLayer(tiles = "https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png",
                               attr  = "© OpenStreetMap-Mitwirkende, Memomaps",
                               name  = "ÖPNV-Karte"
                              ).add_to(map)
              folium.LayerControl().add_to(map)
     
-    map_filename = f"{filename}.html" 
+    map_filename = f"{filename}.html"                                               # Filenamen zusammensetzen
     path_to_data_map = os.path.join(main_dir, "data", "data_map", map_filename)     # wo soll die map gespeichert werden
     map.save(path_to_data_map)                                                      # Speichern der map mit map_filename

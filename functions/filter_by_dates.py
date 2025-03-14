@@ -1,7 +1,7 @@
 import pandas as pd
 
 def filter_by_interval(df:pd.DataFrame, start_date:str = None, end_date:str = None) ->pd.DataFrame:
-    """Sortiert und gibgt einen Ufo-DataFrame in einem Datetime-Intervall zurück.
+    """Sortiert und gibt einen Ufo-DataFrame in einem Datetime-Intervall zurück.
     start_date, end_date im ISO-Format yyyy-mm-dd."""
 
     df["datetime"] = pd.to_datetime(df["datetime"])  # YYYY-MM-DD ist default
