@@ -1,5 +1,6 @@
 #   DATENSATZ LADEN
-
+import os
+import sys
 import pandas as pd #dataframes und datetime
 import numpy as np #tageszeit berechnen
 import matplotlib.pyplot as plt #basis-diagramme
@@ -8,8 +9,17 @@ import calendar # Monatsnummern in Monatsnamen umwandeln
 import seaborn as sns #heatmap
 import holidays #für feiertagsanalyse
 
+
+path_to_scripts_folder = os.path.abspath(os.path.dirname(__file__))
+path_to_main_folder = os.path.join(path_to_scripts_folder, "..")
+
+sys.path.append(path_to_main_folder)
+
+from functions import laura_functions
+
 path = (r"C:\Users\Admin\Documents\Projekt_Ufo\Projekt_UFO\data\data_clean\ufo_sightings_scrubbed_clean.csv")
 ufo_sightings_df = pd.read_csv(path)
+
 
 ################################################################################################################
 
