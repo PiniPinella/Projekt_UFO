@@ -8,3 +8,9 @@ BeautifulSoup
 lxml
 html
 geopy
+numpy 
+matplotlib.pyplot
+matplotlib.dates
+calendar
+seaborn
+holidays
