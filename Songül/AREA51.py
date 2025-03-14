@@ -80,6 +80,8 @@ df_area51.isnull().sum()
 # Geocoder für Area 51
 # 
 
+# In[60]:
+
 
 # pip install geopy
 # Importiere die Nominatim-Klasse aus der geopy.geocoders-Bibliothek.
@@ -104,6 +106,15 @@ if standort:
 else:
     # Falls kein Standort gefunden wurde, informiere den Benutzer darüber.
     print("Standort nicht gefunden.")
+
+
+# In[ ]:
+
+
+
+
+
+# In[61]:
 
 
 #  Koordinaten von Area 51
@@ -131,6 +142,9 @@ print(f"Anzahl der Sichtungen in der Nähe von Area 51: {len(df_area51)}")
 print(df_area51.head())
 
 
+# In[62]:
+
+
 radius10 = 0.10
 df_area51 = df_area51[  # Verwende den richtigen DataFrame "df_area51"
     (df_area51["latitude"].astype(float) >= area51_lat - radius) & 
@@ -143,6 +157,8 @@ df_area51 = df_area51[  # Verwende den richtigen DataFrame "df_area51"
 print(f"Anzahl der Sichtungen in der Nähe von Area 51: {len(df_area51)}")
 print(df_area51.head())
 
+
+# In[63]:
 
 
 radius20 = 0.20
@@ -158,6 +174,7 @@ print(f"Anzahl der Sichtungen in der Nähe von Area 51: {len(df_area51)}")
 print(df_area51.head())
 
 
+# In[64]:
 
 
 radius30 = 30
@@ -178,21 +195,32 @@ print(df_area51.head())
 # In[65]:
 
 
+# wandeln die 'duration_seconds' in ein timedelta-Objekt um
+df_area51["duration"] = pd.to_timedelta(df_area51["duration_seconds"], unit= "s")
+print(df_area51["duration"].head())
 
 
+# In[66]:
 
 
 df_area51["duration_hour"] = df_area51["duration"].dt.total_seconds() / 3600
 print(df_area51[["duration_seconds", "duration", "duration_hour" ]].head())
 
 
+# In[71]:
 
 
+df_area51["time_of_day"] = df_area51["duration_hour"].apply(lambda x: "Tag" if 6 <= x < 18 else "Nacht" )
+print(df_area51[["datetime", "duration_hour", "time_of_day"]].head())
 
+
+# In[81]:
 
 
 df_area51
 
+
+# In[ ]:
 
 
 # Stelle sicher, dass 'datetime' ein DateTime-Objekt ist
@@ -208,8 +236,13 @@ df_area51["time_of_day"] = df_area51["hour"].apply(lambda x: "Tag" if 6 <= x < 1
 print(df_area51[["datetime", "duration_seconds" ,"time_of_day"]].head())
 
 
+# In[ ]:
 
 
+
+
+
+# In[ ]:
 
 
 
