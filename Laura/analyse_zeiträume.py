@@ -12,15 +12,23 @@ import holidays #für feiertagsanalyse
 
 ### HELP ###
 
-###path = (r"C:\Users\Admin\Documents\Projekt_Ufo\Projekt_UFO\data\data_clean\ufo_sightings_scrubbed_clean.csv")
-###ufo_sightings_df = pd.read_csv(path)###
 
+## derzeitiger weg
+path = (r"C:\Users\Admin\Documents\Projekt_Ufo\Projekt_UFO\data\data_clean\ufo_sightings_scrubbed_clean.csv")
+ufo_sightings_df = pd.read_csv(path)###
 
+### Versuch, orgendlich zu koppeln
 path_to_scripts_folder = os.path.abspath(os.path.dirname(__file__))
 path_to_main_folder = os.path.join(path_to_scripts_folder, "..")
 sys.path.append(path_to_main_folder)
 
+
+
+
+
+
 from functions import laura_functions
+
 
 ### Ordner für alle Grafiken
 grafiken_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
