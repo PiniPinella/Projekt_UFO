@@ -19,7 +19,8 @@ spalten = int(anzahl_bilder**0.5)  # Wurzel aus der Anzahl der Bilder
 zeilen = (anzahl_bilder // spalten) + (1 if anzahl_bilder % spalten != 0 else 0) #ganzzahlige Division + Rest
 
 # Panel erstellen
-fig, axes = plt.subplots(zeilen, spalten, figsize=(10, 10))
+fig, axes = plt.subplots(zeilen, spalten, figsize=(20, 20
+))
 fig.suptitle("Zusammenfassung", fontsize=16)
 
 # Bilder in den Subplots anzeigen
@@ -43,3 +44,4 @@ for i in range(anzahl_bilder, zeilen * spalten):
 # Layout anpassen und Grafik anzeigen
 plt.tight_layout()
 plt.show()
+plt.savefig(grafiken_ordner, dpi=300)
