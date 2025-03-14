@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import sys
+import html
 
 print("data_cleanup gestartet")
 
@@ -29,6 +30,14 @@ ufo_df["latitude"]  = ufo_df["latitude"].str.replace(r"[^\d.-]", "", regex = Tru
 ufo_df["latitude"]  = pd.to_numeric(ufo_df["latitude"])              # HIER GEHEN ZAHLEN VERLOREN AB ZEILE 65535, wenn die csv oben nicht als dtype str eingelesen wurde
 ufo_df["longitude"] = pd.to_numeric(ufo_df["longitude"])
 print(f"Spalten 'latitude' und 'longitude' bereinigt.")
+
+# Spalte commments bereinigen. Sehr viele html codes im Text:
+nan_count = ufo_df["comments"].isna().sum()
+ufo_df["comments"] = ufo_df["comments"].fillna("")
+print(f"{nan_count} NaN-Werte in Spalte 'comments' durch leeren String ersetzt.")
+
+ufo_df["comments"] = ufo_df["comments"].apply(html.unescape)
+print("Spalte 'comments' von html code befreit.")
 
 # Die beiden Spalten mit Datums hatten keine Probleme
 
