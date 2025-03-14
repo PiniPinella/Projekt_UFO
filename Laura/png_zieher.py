@@ -43,5 +43,5 @@ for i in range(anzahl_bilder, zeilen * spalten):
 
 # Layout anpassen und Grafik anzeigen
 plt.tight_layout()
-plt.show()
-plt.savefig(grafiken_ordner, dpi=300)
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "zusammenfassung"))
