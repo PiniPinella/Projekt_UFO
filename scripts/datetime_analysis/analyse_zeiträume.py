@@ -9,29 +9,16 @@ import calendar # Monatsnummern in Monatsnamen umwandeln
 import seaborn as sns #heatmap
 import holidays #für feiertagsanalyse
 
-
-### HELP ###
-
-
-## derzeitiger weg
-path = (r"C:\Users\Admin\Documents\Projekt_Ufo\Projekt_UFO\data\data_clean\ufo_sightings_scrubbed_clean.csv")
-ufo_sightings_df = pd.read_csv(path)###
-
-### Versuch, orgendlich zu koppeln
-path_to_scripts_folder = os.path.abspath(os.path.dirname(__file__))
-path_to_main_folder = os.path.join(path_to_scripts_folder, "..")
-sys.path.append(path_to_main_folder)
-
-
-
-
+ROOT_DIR = sys.argv[1]
+sys.path.append(ROOT_DIR)
+path = os.path.join(ROOT_DIR, "data", "data_clean", "ufo_sightings_scrubbed_clean.csv")
+ufo_sightings_df = pd.read_csv(path)
 
 
 from functions import laura_functions
 
-
 ### Ordner für alle Grafiken
-grafiken_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
+grafiken_ordner = os.path.join(ROOT_DIR, "data", "data_visualisation", "datetime_analysis")
 
 ################################################################################################################
 
@@ -64,7 +51,7 @@ plt.xlabel('Jahr')
 plt.ylabel('Anzahl der Sichtungen')
 plt.grid(True)  # Gitternetzlinien hinzufügen
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "jahre"))
+plt.savefig(os.path.join(grafiken_ordner, "jahre.png"))
 
 # --------------------------
 
@@ -86,7 +73,7 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend()
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "jahre_close_up"))
+plt.savefig(os.path.join(grafiken_ordner, "jahre_close_up.png"))
 
 ################################################################################################################
 
@@ -109,7 +96,7 @@ plt.xlabel('Monat')
 plt.ylabel('Anzahl der Sichtungen')
 plt.xticks(rotation=45)
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "monate"))
+plt.savefig(os.path.join(grafiken_ordner, "monate.png"))
 
 ################################################################################################################
 
@@ -147,7 +134,7 @@ for i, value in enumerate(sightings_per_season['sightings']):
 
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "jahreszeiten"))
+plt.savefig(os.path.join(grafiken_ordner, "jahreszeiten.png"))
 
 ################################################################################################################
 
@@ -172,7 +159,7 @@ plt.xlabel('Tag des Monats', fontsize=14)
 plt.ylabel('Anzahl der Sichtungen', fontsize=14)
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "tage_datum"))
+plt.savefig(os.path.join(grafiken_ordner, "tage_datum.png"))
 
 ################################################################################################################
 
@@ -208,7 +195,7 @@ for i, value in enumerate(sightings_per_weekday.values):
 plt.xticks(rotation=45)
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "tage_wochentag"))
+plt.savefig(os.path.join(grafiken_ordner, "tage_wochentag.png"))
 
 ################################################################################################################
 
@@ -260,7 +247,7 @@ plt.xlabel("Wochentag", fontsize=14)
 plt.ylabel("Stunde des Tages", fontsize=14)
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "tageszeit"))
+plt.savefig(os.path.join(grafiken_ordner, "tageszeit.png"))
 
 ################################################################################################################
 
@@ -288,7 +275,7 @@ for i, value in enumerate(top10_date_counts.values):
 plt.xticks(rotation=45)
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "tag_monat"))
+plt.savefig(os.path.join(grafiken_ordner, "tag_monat.png"))
 
 ################################################################################################################
 
@@ -321,7 +308,7 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title='Land')
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "jahre_land"))
+plt.savefig(os.path.join(grafiken_ordner, "jahre_land.png"))
 
 # --------------------------
 
@@ -353,7 +340,7 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title='Land')
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "jahre_land_close_up"))
+plt.savefig(os.path.join(grafiken_ordner, "jahre_land_close_up.png"))
 
 
 ################################################################################################################
@@ -402,7 +389,7 @@ plt.xticks(rotation=45, ha="right")  # Feiertagsnamen drehen, um Lesbarkeit zu v
 
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "holidays"))
+plt.savefig(os.path.join(grafiken_ordner, "holidays.png"))
 
 ################################################################################################################
 
@@ -453,4 +440,4 @@ plt.xticks(rotation=45)
 plt.grid(True)
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "perseiden"))
+plt.savefig(os.path.join(grafiken_ordner, "perseiden.png"))
