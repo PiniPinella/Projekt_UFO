@@ -4,9 +4,18 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sys
+
+print("Theos Skript gestartet.")
+ROOT_DIR = sys.argv[1]
 
 # Datei erneut hochladen (da sie im Speicher verloren ging)
-file_path = "data_clean/ufo_sightings_scrubbed_clean.csv"  # Ursprünglicher Upload-Pfad
+file_path = os.path.join(ROOT_DIR, "data", "data_clean", "ufo_sightings_scrubbed_clean.csv")  # Ursprünglicher Upload-Pfad
+path_to_data_visualisation_duration_plots = os.path.join(ROOT_DIR, "data", "data_visualisation", "duration_plots")
+
+fig_1 = os.path.join(path_to_data_visualisation_duration_plots, "histogram_sichtungsdauer.png")
+fig_2 = os.path.join(path_to_data_visualisation_duration_plots, "balkendiagramm_shapes.png")
+fig_3 = os.path.join(path_to_data_visualisation_duration_plots, "histogram_tageszeit.png")
 
 # Datei einlesen und Spaltennamen bereinigen
 df = pd.read_csv(file_path, low_memory=False)
@@ -48,7 +57,8 @@ plt.title("Verteilung der UFO-Sichtungsdauer")
 plt.xticks(rotation=45)
 plt.grid(True, linestyle="--", linewidth=0.7)
 plt.tight_layout()  # Stellt sicher, dass nichts abgeschnitten wird
-plt.savefig("histogram_sichtungsdauer.png")
+
+plt.savefig(fig_1)
 
 # Feinanpassung des Balkendiagramms für Shapes
 shape_durations = df.groupby("shape")["duration_seconds"].median().sort_values(ascending=False).reset_index()
@@ -65,7 +75,8 @@ plt.ylabel("Mittlere Sichtungsdauer (Sekunden)")
 plt.title("Mittlere Sichtungsdauer pro Shape in Sekunden")
 plt.grid(True, linestyle="--", linewidth=0.7)
 plt.tight_layout()  # Stellt sicher, dass nichts abgeschnitten wird
-plt.savefig("balkendiagramm_shapes.png")
+
+plt.savefig(fig_2)
 
 # Feinanpassung der Tageszeit-Analyse
 plt.figure(figsize=(14, 8))  # Größer für bessere Darstellung
@@ -86,8 +97,11 @@ plt.title("Wann treten lange Sichtungen auf?")
 plt.xticks(range(0, 24))
 plt.grid(True, linestyle="--", linewidth=0.7)
 plt.tight_layout()  # Stellt sicher, dass nichts abgeschnitten wird
-plt.savefig("histogram_tageszeit.png")
+
+plt.savefig(fig_3)
 
 # Bereinigte Datei speichern
-df.to_csv(file_path, index=False)
-print(f"✅ Datei erfolgreich gespeichert unter: {file_path}")
+# df.to_csv(file_path, index=False)
+# print(f"✅ Datei erfolgreich gespeichert unter: {file_path}")
+
+print("Theos Skript beendet.")
