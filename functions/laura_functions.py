@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 # Zeile datetime in Datetime-Format umwandeln
@@ -18,3 +19,26 @@ def get_season(month):
         return "sommer"
     else:
         return "autumn"
+    
+
+# Tageszeit filtern  
+def kategorisiere_tageszeit(df, datetime_column):
+   
+    # zieht die Stunden
+    hour = df[datetime_column].dt.hour
+
+    # Bedingungen für die Tageszeit-Kategorisierung
+    conditions = [
+        (hour >= 6) & (hour < 12),   # Vormittag (Tag)
+        (hour >= 12) & (hour < 14),  # Mittag
+        (hour >= 14) & (hour < 18),  # Nachmittag (Tag)
+        (hour >= 18) | (hour < 6)    # Nacht
+    ]
+
+    # Labels für die Kategorien
+    labels = ["Vormittag", "Mittag", "Nachmittag", "Nacht"]
+
+    # Fügt Spalte 'zeitkategorie' zum DataFrame hinzu
+    df["zeitkategorie"] = np.select(conditions, labels, default="Unbekannt")
+
+    return df

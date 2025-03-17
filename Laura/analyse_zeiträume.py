@@ -10,16 +10,28 @@ import seaborn as sns #heatmap
 import holidays #für feiertagsanalyse
 
 
+### HELP ###
+
+
+## derzeitiger weg
+path = (r"C:\Users\Admin\Documents\Projekt_Ufo\Projekt_UFO\data\data_clean\ufo_sightings_scrubbed_clean.csv")
+ufo_sightings_df = pd.read_csv(path)###
+
+### Versuch, orgendlich zu koppeln
 path_to_scripts_folder = os.path.abspath(os.path.dirname(__file__))
 path_to_main_folder = os.path.join(path_to_scripts_folder, "..")
-
 sys.path.append(path_to_main_folder)
+
+
+
+
+
 
 from functions import laura_functions
 
-path = (r"C:\Users\Admin\Documents\Projekt_Ufo\Projekt_UFO\data\data_clean\ufo_sightings_scrubbed_clean.csv")
-ufo_sightings_df = pd.read_csv(path)
 
+### Ordner für alle Grafiken
+grafiken_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
 
 ################################################################################################################
 
@@ -46,12 +58,13 @@ years_df = ufo_sightings_df["years"]
 sightings_per_year = ufo_sightings_df.groupby("years").size()
 
 # Grafik alle Jahre
-"""sightings_per_year.plot(kind='line', figsize=(12, 6), marker='o', color='green', linestyle='-')
+sightings_per_year.plot(kind='line', figsize=(12, 6), marker='o', color='green', linestyle='-')
 plt.title('UFO-Sichtungen über die Jahre')
 plt.xlabel('Jahr')
 plt.ylabel('Anzahl der Sichtungen')
 plt.grid(True)  # Gitternetzlinien hinzufügen
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "jahre"))
 
 # --------------------------
 
@@ -62,7 +75,7 @@ close_up_df = ufo_sightings_df[ufo_sightings_df["years"] >= 1990]
 sightings_close_up = close_up_df.groupby("years").size()
 
 # Grafik Close Up
-"""
+
 plt.figure(figsize=(14, 6)) 
 plt.plot(sightings_close_up.index, sightings_close_up.values, marker='o', color='green', linestyle='-', label='Sichtungen pro Jahr')
 plt.xticks(sightings_close_up.index, rotation=90) 
@@ -72,7 +85,8 @@ plt.ylabel('Anzahl der Sichtungen', fontsize=14)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend()
 plt.tight_layout()
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "jahre_close_up"))
 
 ################################################################################################################
 
@@ -88,13 +102,14 @@ sightings_per_month =  ufo_sightings_df.groupby("months").size()
 # Grafik 
 sightings_per_month.index = sightings_per_month.index.map(lambda x: calendar.month_abbr[x]) # Monatsnummern in Monatsnamen umwandeln
 
-"""plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 6))
 sns.barplot(x=sightings_per_month.index, y=sightings_per_month.values, palette="viridis")
 plt.title('UFO-Sichtungen pro Monat')
 plt.xlabel('Monat')
 plt.ylabel('Anzahl der Sichtungen')
 plt.xticks(rotation=45)
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "monate"))
 
 ################################################################################################################
 
@@ -119,7 +134,7 @@ seasons_df = ufo_sightings_df["season"]
 sightings_per_season = ufo_sightings_df.groupby("season").size().reset_index(name="sightings")
 
 # Grafik Jahreszeit
-"""plt.figure(figsize=(10, 6))  # Größe des Diagramms anpassen
+plt.figure(figsize=(10, 6))  # Größe des Diagramms anpassen
 sns.barplot(x='season', y='sightings', data=sightings_per_season, palette="viridis")
 
 plt.title('UFO-Sichtungen pro Saison', fontsize=16)
@@ -131,8 +146,8 @@ for i, value in enumerate(sightings_per_season['sightings']):
     plt.text(i, value + 0.1, str(value), ha='center', va='bottom', fontsize=12)
 
 plt.tight_layout()
-plt.show()
-"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "jahreszeiten"))
 
 ################################################################################################################
 
@@ -150,14 +165,14 @@ most_sightings_count = sightings_per_day.max()
 
 # Grafik Tage
 
-"""plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 6))
 sns.barplot(x=sightings_per_day.index, y=sightings_per_day.values, palette="viridis")
 plt.title('UFO-Sichtungen pro Tag des Monats', fontsize=16)
 plt.xlabel('Tag des Monats', fontsize=14)
 plt.ylabel('Anzahl der Sichtungen', fontsize=14)
 plt.tight_layout()
-plt.show()
-"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "tage_datum"))
 
 ################################################################################################################
 
@@ -179,7 +194,7 @@ sightings_per_weekday = sightings_per_weekday.reindex(weekday_names)
 
 # Grafik Wochentag
 
-"""plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 6))
 sns.barplot(x=sightings_per_weekday.index, y=sightings_per_weekday.values, palette="viridis")
 
 plt.title('UFO-Sichtungen pro Wochentag', fontsize=16)
@@ -192,7 +207,8 @@ for i, value in enumerate(sightings_per_weekday.values):
 
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "tage_wochentag"))
 
 ################################################################################################################
 
@@ -215,6 +231,8 @@ labels = ["Vormittag", "Mittag", "Nachmittag", "Nacht"]
 # neue Spalte ins df
 ufo_sightings_df["zeitkategorie"] = np.select(conditions, labels, default="Unbekannt")
 
+'''kategorisierte_zeit.head() wäre dann mit implementierter def'''
+
 # --------------------------
 
 # nach Stunde und Wochentag filtern
@@ -235,13 +253,14 @@ weekday_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturd
 heatmap_data = heatmap_data[weekday_names]"""
 
 # Grafik Tageszeiten
-"""plt.figure(figsize=(12, 8))
+plt.figure(figsize=(12, 8))
 sns.heatmap(heatmap_data, cmap="YlOrRd", annot=True, fmt="d", linewidths=0.5)
 plt.title("UFO-Sichtungen nach Stunde und Wochentag", fontsize=16)
 plt.xlabel("Wochentag", fontsize=14)
 plt.ylabel("Stunde des Tages", fontsize=14)
 plt.tight_layout()
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "tageszeit"))
 
 ################################################################################################################
 
@@ -253,9 +272,10 @@ ufo_sightings_df["datetime"] = ufo_sightings_df["datetime"].dt.date
 
 # value_counts ziehen
 date_counts = ufo_sightings_df["datetime"].value_counts()
+top10_date_counts = date_counts.head(10)
 
 # Grafik Tag.Monat
-"""plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 6))
 sns.barplot(x=top10_date_counts.index, y=top10_date_counts.values, palette="viridis")
 plt.title('Top 10 Datumsangaben mit den meisten UFO-Sichtungen', fontsize=16)
 plt.xlabel('Datum', fontsize=14)
@@ -267,8 +287,8 @@ for i, value in enumerate(top10_date_counts.values):
 
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()
-"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "tag_monat"))
 
 ################################################################################################################
 
@@ -284,7 +304,7 @@ sightings_per_year_country = ufo_sightings_df.groupby(["years", "country"]).size
 # Grafik Jahr und Land
 
 # Länder zur Leserlichkeit umbenannt
-"""sightings_per_year_country = sightings_per_year_country.rename(columns={
+sightings_per_year_country = sightings_per_year_country.rename(columns={
     "au": "Australien",
     "ca": "Canada",
     "gb": "Großbrittanien",
@@ -300,7 +320,8 @@ plt.ylabel('Anzahl der Meldungen', fontsize=14)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title='Land')
 plt.tight_layout()
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "jahre_land"))
 
 # --------------------------
 
@@ -315,7 +336,7 @@ sightings_close_up_country = close_up_df.groupby(["years", "country"]).size().un
 # Grafik Close Up
 
 # Länder zur Leserlichkeit umbenannt
-"""sightings_close_up_country = sightings_close_up_country.rename(columns={
+sightings_close_up_country = sightings_close_up_country.rename(columns={
     "au": "Australien",
     "ca": "Canada",
     "gb": "Großbrittanien",
@@ -331,8 +352,9 @@ plt.ylabel('Anzahl der Meldungen', fontsize=14)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(title='Land')
 plt.tight_layout()
-plt.show()
-"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "jahre_land_close_up"))
+
 
 ################################################################################################################
 
@@ -370,7 +392,7 @@ holiday_counts = holiday_sightings["holiday_name"].value_counts()
 
 # Grafik Feiertage
 
-"""plt.figure(figsize=(10, 6))
+plt.figure(figsize=(10, 6))
 sns.barplot(x=holiday_counts.index, y=holiday_counts.values, palette="viridis")
 
 plt.title("UFO-Sichtungen an US-Feiertagen", fontsize=16)
@@ -379,7 +401,8 @@ plt.ylabel("Anzahl der Sichtungen", fontsize=12)
 plt.xticks(rotation=45, ha="right")  # Feiertagsnamen drehen, um Lesbarkeit zu verbessern
 
 plt.tight_layout()
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "holidays"))
 
 ################################################################################################################
 
@@ -421,7 +444,7 @@ sightings_per_date["sort_key"] = pd.to_datetime(sightings_per_date["date_str"], 
 sightings_per_date = sightings_per_date.sort_values("sort_key")
 
 # Plot
-"""plt.figure(figsize=(12, 6))
+plt.figure(figsize=(12, 6))
 sns.lineplot(x="date_str", y="count", data=sightings_per_date, marker="o", color="green")
 plt.title("UFO-Sichtungen im Perseiden-Zeitraum (17.07. – 24.08.)")
 plt.xlabel("Datum")
@@ -429,4 +452,5 @@ plt.ylabel("Anzahl der Sichtungen")
 plt.xticks(rotation=45)
 plt.grid(True)
 plt.tight_layout()
-plt.show()"""
+#plt.show()
+plt.savefig(os.path.join(grafiken_ordner, "perseiden"))
