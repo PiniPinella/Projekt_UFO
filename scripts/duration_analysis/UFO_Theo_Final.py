@@ -11,7 +11,7 @@ ROOT_DIR = sys.argv[1]
 
 # Datei erneut hochladen (da sie im Speicher verloren ging)
 file_path = os.path.join(ROOT_DIR, "data", "data_clean", "ufo_sightings_scrubbed_clean.csv")  # Ursprünglicher Upload-Pfad
-path_to_data_visualisation_duration_plots = os.path.join(ROOT_DIR, "data", "data_visualisation", "duration_plots")
+path_to_data_visualisation_duration_plots = os.path.join(ROOT_DIR, "data", "data_visualisation", "duration_analysis")
 
 fig_1 = os.path.join(path_to_data_visualisation_duration_plots, "histogram_sichtungsdauer.png")
 fig_2 = os.path.join(path_to_data_visualisation_duration_plots, "balkendiagramm_shapes.png")

@@ -3,8 +3,8 @@ from folium.plugins import MarkerCluster
 from folium.plugins import HeatMap
 import pandas as pd
 import os
-import filter_by_dates
-import haversine
+from functions import filter_by_dates
+from functions import haversine
 
 def create_cluster_heat_map(df:pd.DataFrame,
                             filename:str, 
@@ -45,8 +45,27 @@ def create_cluster_heat_map(df:pd.DataFrame,
             HeatMap(map_data).add_to(map)
 
     if map_type == "cluster" or map_type == "opnv":                                 # cluster map or cluster opnv map
-                                 
-        marker_cluster = MarkerCluster().add_to(map)                                # Erstelle Cluster damit nicht 80000 Punkte einzelt auf der Map sind
+
+        # JavaScript-Funktion zur Anpassung der Clusterfarben
+        custom_cluster = """
+        function(cluster) {
+            var count = cluster.getChildCount();
+            var color = count < 100 ? 'rgba(0, 200, 0, 0.7)' : 
+                        count < 500 ? 'rgba(255, 200, 0, 0.8)' : 
+                        count < 1000 ? 'rgba(255, 100, 0, 0.9)' : 
+                        'rgba(200, 0, 0, 1)';
+
+            return new L.DivIcon({
+                html: '<div style="background-color:' + color + 
+                    '; width: 35px; height: 35px; border-radius: 50%;' +
+                    'display: flex; justify-content: center; align-items: center;' +
+                    'font-size: 14px; font-weight: bold; color: white;">' + count + '</div>',
+                className: 'custom-cluster',
+                iconSize: [35, 35]
+            });
+        }
+        """                             
+        marker_cluster = MarkerCluster(icon_create_function=custom_cluster).add_to(map)                                # Erstelle Cluster damit nicht 80000 Punkte einzelt auf der Map sind
 
         for lat, lon in zip(df["latitude"], df["longitude"]):
             folium.Marker([lat, lon]).add_to(marker_cluster)    
