@@ -3,10 +3,14 @@ Dieses Projekt untersucht UFO-Sichtungen weltweit, um Muster und Trends zu ident
 
 Die vorläufige Ordnerstruktur mit Erläuterungen zu den einzelnen Verzeichnissen und deren Inhalten.
 
-- /data_loading
-- /data_analysis
-- /data_visualization
-requirements.txt
+- /data/data_clean
+- /data/data_map
+- /data/data_raw/htm
+- /functions
+- /scripts
+.gitignore
+main.py
 README.MD
+requirements.txt
 
 Hinweise darauf, was eine außenstehende Person über das Projekt wissen sollte, um eine sofortige Übersicht zu erhalten.

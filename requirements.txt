@@ -14,3 +14,5 @@ matplotlib.dates
 calendar
 seaborn
 holidays
+geopandas
+pycountry
