@@ -3,8 +3,67 @@ from PIL import Image
 import matplotlib.pyplot as plt #für die Darstellung aller Bilder in einem Panel
 
 
+def erstelle_zusammenfassung(ordner_pfad, ausgabe_dateiname="zusammenfassung.png"):
+    """
+    Erstellt eine Zusammenfassungs-Grafik aus allen PNG-Bildern in einem Ordner.
+
+    :param ordner_pfad: Pfad zum Ordner mit den Bildern
+    :param ausgabe_dateiname: Name der Ausgabedatei (Standard: "zusammenfassung.png")
+    """
+    # Alle Bilder in eine Liste (Suche nach ".png")
+    grafiken_liste = [f for f in os.listdir(ordner_pfad) if f.endswith('.png')]
+
+    # Anzahl der Bilder berechnen
+    anzahl_bilder = len(grafiken_liste)
+
+    # Rastergröße berechnen (ca. Quadrat zur Orientierung)
+    spalten = int(anzahl_bilder**0.5)  # Wurzel aus der Anzahl der Bilder
+    zeilen = (anzahl_bilder // spalten) + (1 if anzahl_bilder % spalten != 0 else 0)  # Ganzzahlige Division + Rest
+
+    # Panel erstellen
+    fig, axes = plt.subplots(zeilen, spalten, figsize=(20, 20))
+    fig.suptitle("Zusammenfassung", fontsize=16)
+
+    # Bilder in den Subplots anzeigen
+    for i, datei in enumerate(grafiken_liste):
+        # Bild laden
+        bild_pfad = os.path.join(ordner_pfad, datei)
+        bild = Image.open(bild_pfad)
+
+        # Subplot auswählen
+        if zeilen > 1:
+            ax = axes[i // spalten][i % spalten]
+        else:
+            ax = axes[i % spalten]
+
+        # Bild im Subplot anzeigen
+        ax.imshow(bild)
+        ax.axis('off')  # Achsen ausblenden
+
+    # Leere Subplots ausblenden
+    for i in range(anzahl_bilder, zeilen * spalten):
+        if zeilen > 1:
+            ax = axes[i // spalten][i % spalten]
+        else:
+            ax = axes[i % spalten]
+        ax.axis('off')
+
+    # Layout anpassen und Grafik speichern
+    plt.tight_layout()
+    plt.savefig(os.path.join(ordner_pfad, ausgabe_dateiname))
+    plt.close()  # Schließe das Figure-Objekt, um Speicher freizugeben
 
 
+
+
+# Beispielaufruf der Funktion
+grafiken_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
+erstelle_zusammenfassung(grafiken_ordner)
+
+
+
+#### ORIGINALCODE #####
+"""
 # Pfad zum Ordner "grafiken" relativ zum aktuellen Skript
 grafiken_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
 
@@ -44,4 +103,4 @@ for i in range(anzahl_bilder, zeilen * spalten):
 # Layout anpassen und Grafik anzeigen
 plt.tight_layout()
 #plt.show()
-plt.savefig(os.path.join(grafiken_ordner, "zusammenfassung"))
+plt.savefig(os.path.join(grafiken_ordner, "zusammenfassung"))"""
