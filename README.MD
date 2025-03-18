@@ -6,6 +6,7 @@ Die vorläufige Ordnerstruktur mit Erläuterungen zu den einzelnen Verzeichnisse
 - /data/data_clean
 - /data/data_map
 - /data/data_raw/htm
+- /data/data_visualisation
 - /functions
 - /scripts
 .gitignore
