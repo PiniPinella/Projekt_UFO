@@ -26,7 +26,7 @@ create_map.create_cluster_heat_map(ufo_df,
                                    end_date   = "1999-11-17", 
                                    map_type   = "cluster"
                                   )
-print("map1 fertig")
+
 # Leoniden 16./17. Nov 1999 Heat Map
 create_map.create_cluster_heat_map(ufo_df, 
                                    filename   = "Leoniden_1617_11_1999_Heat", 
@@ -35,7 +35,7 @@ create_map.create_cluster_heat_map(ufo_df,
                                    end_date   = "1999-11-17", 
                                    map_type   = "heat"
                                   )
-print("map2 fertig")
+
 # Independence Day 04. Jul 2010
 create_map.create_cluster_heat_map(ufo_df, 
                                    filename   = "Independence_Day_04_07_2010_cluster", 
@@ -44,5 +44,5 @@ create_map.create_cluster_heat_map(ufo_df,
                                    end_date   = "2010-07-04", 
                                    map_type   = "cluster"
                                   )
-print("map3 fertig")
+
 

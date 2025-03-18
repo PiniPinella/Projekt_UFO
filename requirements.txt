@@ -16,3 +16,4 @@ seaborn
 holidays
 geopandas
 pycountry
+ephem
