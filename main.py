@@ -24,7 +24,7 @@ print("duration_analysis_script  Skript abgeschlossen.")
 # Starte area51_analsis_script
 path_to_area51_analysis_script = os.path.join(ROOT_DIR, "scripts", "area51_analysis_script.py")
 print("area51_analysis_script Skript startet.")
-# subprocess.run(["python", path_to_area51_analysis_script, ROOT_DIR])
+subprocess.run(["python", path_to_area51_analysis_script, ROOT_DIR])
 print("area51_analysis_script  Skript abgeschlossen.")
 
 # Starte geo_analysis_script
