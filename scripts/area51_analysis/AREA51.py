@@ -5,6 +5,9 @@ from geopy.geocoders import Nominatim
 import seaborn as sns
 import matplotlib.pyplot as plt
 import sys
+import holidays
+import ephem
+
 
 ROOT_DIR = sys.argv[1]
 sys.path.append(ROOT_DIR)
@@ -131,3 +134,30 @@ else:
 
     plt.savefig(fig3)
     # plt.show()
+    
+#Mondphase pip install ephem
+def calculate_moon_phase(date):
+    """
+    Berechnet die Mondphase für ein gegebenes Datum.
+    0 = Neumond, 0.5 = Halbmond, 1 = Vollmond.
+    """
+    moon = ephem.Moon(date)
+    return moon.phase / 29.5  # 0 bis 1 Skala
+ # Mondzyklus, der etwa 29,5 Tage dauert
+
+
+# Berechnung der Mondphase für jede UFO-Sichtung
+df_area51["moon_phase"] = df_area51["datetime"].apply(lambda x: calculate_moon_phase(x) if pd.notnull(x) else None)
+
+# Anzeige der ersten Zeilen mit Mondphasen
+print(df_area51[["datetime", "moon_phase"]].head())
+
+# Diagramm der Mondphasenverteilung
+plt.figure(figsize=(8, 5))
+sns.histplot(df_area51["moon_phase"], bins=10, kde=True, color="purple")
+plt.xlabel("Mondphase (0 = Neumond, 1 = Vollmond)")
+plt.ylabel("Anzahl der Sichtungen")
+plt.title("Verteilung der UFO-Sichtungen nach Mondphase")
+plt.grid(True)
+plt.savefig("UFO_Mondphase.png")
+plt.show()
