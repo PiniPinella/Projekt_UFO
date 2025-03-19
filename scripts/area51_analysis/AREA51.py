@@ -15,7 +15,7 @@ path_to_data_visualisation = os.path.join(ROOT_DIR, "data", "data_visualisation"
 fig1 = os.path.join(ROOT_DIR, "data", "data_visualisation", "area51_analysis", "UFO_Tageszeit.png")
 fig2 = os.path.join(ROOT_DIR, "data", "data_visualisation", "area51_analysis", "UFO_Sichtungen_in_Area_51_über_die_Jahre.png")
 fig3 = os.path.join(ROOT_DIR, "data", "data_visualisation", "area51_analysis", "heatmap.png")
-fig4 = os.path.join(ROOT_DIR, "data", "data_visualisation", "area51-analysis", "UFO_Mondphase")
+fig4 = os.path.join(ROOT_DIR, "data", "data_visualisation", "area51_analysis", "UFO_Mondphase")
 
 from functions import ufo_df_loader
 from functions import filter_sightings

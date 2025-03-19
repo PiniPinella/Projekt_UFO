@@ -9,7 +9,7 @@ ROOT_DIR = sys.argv[1]
 
 path_to_data_raw = os.path.join(ROOT_DIR, "data", "data_raw", "ufo_sightings_scrubbed.csv")
 
-ufo_df = pd.read_csv(path_to_data_raw, dtype=str)
+ufo_df = pd.read_csv(path_to_data_raw, dtype = str)
 print("Schmutzige CSV-Datei hat dtypes:")
 print(ufo_df.dtypes)
 
