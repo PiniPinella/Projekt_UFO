@@ -3,15 +3,10 @@ from PIL import Image
 import matplotlib.pyplot as plt #für die Darstellung aller Bilder in einem Panel
 
 
-def erstelle_zusammenfassung(ordner_pfad, ausgabe_dateiname="zusammenfassung.png"):
-    """
-    Erstellt eine Zusammenfassungs-Grafik aus allen PNG-Bildern in einem Ordner.
+def erstelle_zusammenfassung(quell_ordner, ziel_ordner, ausgabe_dateiname="zusammenfassung.png"):
 
-    :param ordner_pfad: Pfad zum Ordner mit den Bildern
-    :param ausgabe_dateiname: Name der Ausgabedatei (Standard: "zusammenfassung.png")
-    """
     # Alle Bilder in eine Liste (Suche nach ".png")
-    grafiken_liste = [f for f in os.listdir(ordner_pfad) if f.endswith('.png')]
+    grafiken_liste = [f for f in os.listdir(quell_ordner) if f.endswith('.png')]
 
     # Anzahl der Bilder berechnen
     anzahl_bilder = len(grafiken_liste)
@@ -27,7 +22,7 @@ def erstelle_zusammenfassung(ordner_pfad, ausgabe_dateiname="zusammenfassung.png
     # Bilder in den Subplots anzeigen
     for i, datei in enumerate(grafiken_liste):
         # Bild laden
-        bild_pfad = os.path.join(ordner_pfad, datei)
+        bild_pfad = os.path.join(quell_ordner, datei)
         bild = Image.open(bild_pfad)
 
         # Subplot auswählen
@@ -50,16 +45,18 @@ def erstelle_zusammenfassung(ordner_pfad, ausgabe_dateiname="zusammenfassung.png
 
     # Layout anpassen und Grafik speichern
     plt.tight_layout()
-    plt.savefig(os.path.join(ordner_pfad, ausgabe_dateiname))
+    plt.savefig(os.path.join(ziel_ordner, ausgabe_dateiname))
     plt.close()  # Schließe das Figure-Objekt, um Speicher freizugeben
 
 
 
-
+"""
 # Beispielaufruf der Funktion
-grafiken_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
-erstelle_zusammenfassung(grafiken_ordner)
+quell_ordner = os.path.join(os.path.dirname(__file__), 'grafiken')
+ziel_ordner = os.path.join(os.path.dirname(__file__), 'zusammenfassungen')
+erstelle_zusammenfassung(quell_ordner, ziel_ordner)
 
+"""
 
 
 #### ORIGINALCODE #####
@@ -104,5 +101,3 @@ for i in range(anzahl_bilder, zeilen * spalten):
 plt.tight_layout()
 #plt.show()
 plt.savefig(os.path.join(grafiken_ordner, "zusammenfassung"))"""
-
-#pfad bild finden, pfad bild hinspeichern -> sep pfadvariablen

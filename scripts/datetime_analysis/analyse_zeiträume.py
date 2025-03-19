@@ -34,7 +34,6 @@ def clean_datetime_column(df, datetime_column="datetime"):
 datetime_clean = clean_datetime_column(ufo_sightings_df)
 
 ################################################################################################################
-
 #   JAHRE
 
 # nach Jahren filtern
@@ -109,13 +108,19 @@ def get_season(month):
     elif month in [3, 4, 5]:
         return "spring"
     elif month in [6, 7, 8]:
-        return "sommer"
+        return "summer"
     else:
         return "autumn"  
+    
+# Sortierung
+seasons_sorted = ["spring", "summer", "autumn", "winter"]
 
 # Monat extrahieren und Jahreszeit zuweisen
 ufo_sightings_df["season"] = ufo_sightings_df["months"].map(get_season)
 seasons_df = ufo_sightings_df["season"]
+
+# Erstelle eine kategorische Spalte mit der gewünschten Sortierung
+ufo_sightings_df["season"] = pd.Categorical(ufo_sightings_df["season"], categories=seasons_sorted, ordered=True)
 
 # Sichtungen pro Jahreszeit 
 sightings_per_season = ufo_sightings_df.groupby("season").size().reset_index(name="sightings")
@@ -226,6 +231,13 @@ ufo_sightings_df["zeitkategorie"] = np.select(conditions, labels, default="Unbek
 ufo_sightings_df["hour"] = datetime_clean.dt.hour
 ufo_sightings_df["weekday"] = datetime_clean.dt.day_name()  # Name des Wochentags
 
+# Konvertiere die Wochentage in eine kategorische Spalte mit der gewünschten Reihenfolge
+ufo_sightings_df["weekday"] = pd.Categorical(
+    ufo_sightings_df["weekday"], 
+    categories=weekday_names, 
+    ordered=True
+)
+
 # Pivot-Tabelle für Heatmap
 heatmap_data = ufo_sightings_df.pivot_table(
     index="zeitkategorie",         
@@ -241,7 +253,7 @@ heatmap_data = heatmap_data[weekday_names]"""
 
 # Grafik Tageszeiten
 plt.figure(figsize=(12, 8))
-sns.heatmap(heatmap_data, cmap="YlOrRd", annot=True, fmt="d", linewidths=0.5)
+sns.heatmap(heatmap_data, cmap="viridis", annot=True, fmt="d", linewidths=0.5)
 plt.title("UFO-Sichtungen nach Stunde und Wochentag", fontsize=16)
 plt.xlabel("Wochentag", fontsize=14)
 plt.ylabel("Stunde des Tages", fontsize=14)
