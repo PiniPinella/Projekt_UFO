@@ -40,9 +40,14 @@ def create_cluster_heat_map(df:pd.DataFrame,
                  ).add_to(map)
     
     if map_type == "heat":                                                          # für Hitzkarte
-            
-            map_data = list(zip(df["latitude"], df["longitude"]))
-            HeatMap(map_data).add_to(map)
+
+            map_data = list(zip(df["latitude"], df["longitude"]))     
+            HeatMap(map_data,
+                    radius      = 12,           # Standard ist 10, größere Werte machen größere Flecken
+                    blur        = 12,           # Standard ist 15, kleinere Werte machen schärfere Flecken
+                    min_opacity = 0.5,          # Standard ist 0.2, höhere Werte machen schwache Punkte sichtbarer
+                    gradient    = {'0':'Navy', '0.25':'Blue','0.5':'Green', '0.75':'Yellow','1': 'Red'}
+                   ).add_to(map)
 
     if map_type == "cluster" or map_type == "opnv":                                 # cluster map or cluster opnv map
 
@@ -61,7 +66,7 @@ def create_cluster_heat_map(df:pd.DataFrame,
                     'display: flex; justify-content: center; align-items: center;' +
                     'font-size: 14px; font-weight: bold; color: white;">' + count + '</div>',
                 className: 'custom-cluster',
-                iconSize: [35, 35]
+                iconSize: [40, 40]
             });
         }
         """                             

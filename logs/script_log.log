@@ -1,0 +1,28 @@
+19/03/2025 09:19:56 - INFO - main.py gestartet.
+19/03/2025 09:19:56 - INFO - data_cleanup_script Skript startet.
+19/03/2025 09:20:00 - INFO - data_cleanup Skript abgeschlossen.
+19/03/2025 09:20:00 - INFO - datetime_analysis_script Skript startet.
+19/03/2025 09:20:06 - INFO - datetime_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:06 - INFO - duration_analysis_script Skript startet.
+19/03/2025 09:20:09 - INFO - duration_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:09 - INFO - area51_analysis_script Skript startet.
+19/03/2025 09:20:13 - INFO - area51_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:13 - INFO - geo_analysis_script Skript startet.
+19/03/2025 09:20:15 - INFO - geo_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:15 - INFO - shape_analysis_script Skript startet.
+19/03/2025 09:20:16 - INFO - shape_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:16 - INFO - Skriptlaufzeit: 20.24 Sekunden
+19/03/2025 09:20:36 - INFO - main.py gestartet.
+19/03/2025 09:20:36 - INFO - data_cleanup_script Skript startet.
+19/03/2025 09:20:39 - INFO - data_cleanup Skript abgeschlossen.
+19/03/2025 09:20:39 - INFO - datetime_analysis_script Skript startet.
+19/03/2025 09:20:44 - INFO - datetime_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:44 - INFO - duration_analysis_script Skript startet.
+19/03/2025 09:20:47 - INFO - duration_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:47 - INFO - area51_analysis_script Skript startet.
+19/03/2025 09:20:51 - INFO - area51_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:51 - INFO - geo_analysis_script Skript startet.
+19/03/2025 09:20:52 - INFO - geo_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:52 - INFO - shape_analysis_script Skript startet.
+19/03/2025 09:20:54 - INFO - shape_analysis_script  Skript abgeschlossen.
+19/03/2025 09:20:54 - INFO - Skriptlaufzeit: 18.29 Sekunden
