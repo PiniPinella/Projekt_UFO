@@ -237,7 +237,7 @@ ufo_sightings_df["weekday"] = datetime_clean.dt.day_name()  # Name des Wochentag
 
 # Konvertiere die Wochentage in eine kategorische Spalte mit der gewünschten Reihenfolge
 ufo_sightings_df["weekday"] = pd.Categorical(     # HAT NUR NAN, DESWEGEN KOMMEN DIE NULLEN
-    ufo_sightings_df["weekday"], 
+    ufo_sightings_df["weekday_name"], 
     categories=weekday_names, 
     ordered=True
 )
@@ -245,7 +245,7 @@ ufo_sightings_df["weekday"] = pd.Categorical(     # HAT NUR NAN, DESWEGEN KOMMEN
 # Pivot-Tabelle für Heatmap
 heatmap_data = ufo_sightings_df.pivot_table(
     index="zeitkategorie",         
-    columns="weekday",                            # Kommentar Patrick : columns="weekday_name" könnte helfen 
+    columns="weekday",         # Kommentar Patrick : columns="weekday_name" könnte helfen 
     values="datetime",    # Werte für die Heatmap (z. B. Anzahl der Sichtungen)
     aggfunc="count",      # Anzahl der Sichtungen
     fill_value=0          # Fülle fehlende Werte mit 0
