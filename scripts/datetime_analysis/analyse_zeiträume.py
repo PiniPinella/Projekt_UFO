@@ -9,7 +9,12 @@ import calendar # Monatsnummern in Monatsnamen umwandeln
 import seaborn as sns #heatmap
 import holidays #für feiertagsanalyse
 
-ROOT_DIR = sys.argv[1]
+if len(sys.argv) > 1:
+    ROOT_DIR = sys.argv[1]
+else:
+    folder = os.path.dirname(os.path.abspath(__file__))
+    ROOT_DIR = os.path.abspath(os.path.join(folder, "..", ".."))
+
 sys.path.append(ROOT_DIR)
 path = os.path.join(ROOT_DIR, "data", "data_clean", "ufo_sightings_scrubbed_clean.csv")
 ufo_sightings_df = pd.read_csv(path)
@@ -32,7 +37,6 @@ def clean_datetime_column(df, datetime_column="datetime"):
 # errors coerce -> erstellt NaNs aus allen unpassenden daten
 
 datetime_clean = clean_datetime_column(ufo_sightings_df)
-
 ################################################################################################################
 #   JAHRE
 
@@ -232,7 +236,7 @@ ufo_sightings_df["hour"] = datetime_clean.dt.hour
 ufo_sightings_df["weekday"] = datetime_clean.dt.day_name()  # Name des Wochentags
 
 # Konvertiere die Wochentage in eine kategorische Spalte mit der gewünschten Reihenfolge
-ufo_sightings_df["weekday"] = pd.Categorical(
+ufo_sightings_df["weekday"] = pd.Categorical(     # HAT NUR NAN, DESWEGEN KOMMEN DIE NULLEN
     ufo_sightings_df["weekday"], 
     categories=weekday_names, 
     ordered=True
@@ -241,7 +245,7 @@ ufo_sightings_df["weekday"] = pd.Categorical(
 # Pivot-Tabelle für Heatmap
 heatmap_data = ufo_sightings_df.pivot_table(
     index="zeitkategorie",         
-    columns="weekday",    
+    columns="weekday",                            # Kommentar Patrick : columns="weekday_name" könnte helfen 
     values="datetime",    # Werte für die Heatmap (z. B. Anzahl der Sichtungen)
     aggfunc="count",      # Anzahl der Sichtungen
     fill_value=0          # Fülle fehlende Werte mit 0

@@ -8,17 +8,17 @@ from functions import haversine
 
 def create_cluster_heat_map(df:pd.DataFrame,
                             filename:str, 
-                            main_dir, 
+                            mapdir, 
                             start_date:str = None, 
                             end_date:str   = None,  
                             radius:int     = None, 
                             map_type:str   = "cluster"
                            ) -> None:
     """Erstellt eine Cluster Map mit map_type = "cluster",
-    eine OPNV Map mit map_type ="opnv 
+    eine OPNV Map mit map_type ="opnv" 
     oder eine Heat Map mit map_type = "heat" mit Folium.
     Dabei kann optional ein Datetime Intervall und ein Radius um Cape Caneveral angegeben werden.
-    Die fertige Map wird im Ordner 'main_dir'/data/data_map mit dem namen 'filename'.hmtl abgelegt"""
+    Die fertige Map wird im Ordner 'mapdir' mit dem namen 'filename'.hmtl abgelegt"""
 
     # Zeitliches Interval:
     if start_date or end_date:
@@ -46,7 +46,7 @@ def create_cluster_heat_map(df:pd.DataFrame,
                     radius      = 12,           # Standard ist 10, größere Werte machen größere Flecken
                     blur        = 12,           # Standard ist 15, kleinere Werte machen schärfere Flecken
                     min_opacity = 0.5,          # Standard ist 0.2, höhere Werte machen schwache Punkte sichtbarer
-                    gradient    = {'0':'Navy', '0.25':'Blue','0.5':'Green', '0.75':'Yellow','1': 'Red'}
+                    gradient    = {'0':'Navy', '0.2':'Blue', '0.4':'Green', '0.6':'Yellow', '0.8':'Orange', '1':'Red'}
                    ).add_to(map)
 
     if map_type == "cluster" or map_type == "opnv":                                 # cluster map or cluster opnv map
@@ -70,18 +70,27 @@ def create_cluster_heat_map(df:pd.DataFrame,
             });
         }
         """                             
-        marker_cluster = MarkerCluster(icon_create_function=custom_cluster).add_to(map)                                # Erstelle Cluster damit nicht 80000 Punkte einzelt auf der Map sind
+        marker_cluster = MarkerCluster(icon_create_function = custom_cluster).add_to(map)       # Erstelle Cluster damit nicht 80000 Punkte einzelt auf der Map sind
 
         for lat, lon in zip(df["latitude"], df["longitude"]):
             folium.Marker([lat, lon]).add_to(marker_cluster)    
 
-        if map_type == "opnv":                                                      # Lädt andere Tiles mit Flughäfen und anderen ÖPNVs
-             folium.TileLayer(tiles = "https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png",
+        if map_type == "opnv":
+
+            folium.Marker(
+                location = [37.2448, -115.8176], 
+                popup    = "👽 Area 51 - Top Secret",
+                icon     = folium.CustomIcon(icon_image = "https://www.svgrepo.com/show/41570/ufo.svg",     # UFO-Icon
+                                             icon_size  = (80, 80)                                          # Größe anpassen 
+                                            )     
+                        ).add_to(map)
+                                                                                            
+            folium.TileLayer(tiles = "https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png",       # Lädt andere Tiles mit Flughäfen und anderen ÖPNVs
                               attr  = "© OpenStreetMap-Mitwirkende, Memomaps",
                               name  = "ÖPNV-Karte"
                              ).add_to(map)
-             folium.LayerControl().add_to(map)
+            folium.LayerControl().add_to(map)
     
     map_filename = f"{filename}.html"                                               # Filenamen zusammensetzen
-    path_to_data_map = os.path.join(main_dir, "data", "data_map", map_filename)     # wo soll die map gespeichert werden
+    path_to_data_map = os.path.join(mapdir, map_filename)                           # wo soll die map gespeichert werden
     map.save(path_to_data_map)                                                      # Speichern der map mit map_filename

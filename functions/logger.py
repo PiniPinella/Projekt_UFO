@@ -11,4 +11,7 @@ logging.basicConfig(filename = os.path.join(LOG_DIR, "script_log.log"),         
                     datefmt  = "%d/%m/%Y %H:%M:%S"                              # Legt Datetime Format fest
                    )
 
+logging.getLogger("PIL").setLevel(logging.WARNING)                              # Setzte Level für PIL auf WARNING
+logging.getLogger('matplotlib').setLevel(logging.WARNING)                       # Setzte Level für mpl auf WARNING
+                                                                                # Andernfalls schreibt Logger zu viele Debugg Infos in die Log-Datei
 logger = logging.getLogger(__name__)                                            # Logger einfacher verfügbar machen für andere Skripte

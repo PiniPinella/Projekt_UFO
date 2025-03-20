@@ -3,17 +3,17 @@ import subprocess
 import time
 
 # Start des main Skripts
-start_str = "Datenanalyse: Go!"
+start_str  = "Datenanalyse: Go!"
 max_length = len(start_str)
-border = "#" * (max_length + 4)
+border     = "#" * (max_length + 4)
 
 print(border)
 print(f"# {start_str} #")
 print(border)
+#############################
 
 start_time = time.time()                                                        # Timestamp für Zeitmessung
-
-ROOT_DIR = os.path.abspath(os.path.dirname(__file__))                           # Pfad des ROOT Verzeichnisses bestimmen  
+ROOT_DIR   = os.path.abspath(os.path.dirname(__file__))                         # Pfad des ROOT Verzeichnisses bestimmen  
 
 #############################
 # Logs
